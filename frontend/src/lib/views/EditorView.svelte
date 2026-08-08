@@ -5,7 +5,7 @@
     import DirtyIndicator from "$features/editor/components/DirtyIndicator.svelte";
     import Editor from "$features/editor/components/Editor.svelte";
     import Tabs from "$features/editor/components/Tabs.svelte";
-    import { editorState } from "$features/editorState.svelte";
+    import { editorState } from "$features/editor/editorState.svelte";
 
     import IconButton from "$components/app/IconButton.svelte";
 

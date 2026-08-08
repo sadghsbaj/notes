@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { editorState } from "$features/editorState.svelte";
+    import { editorState } from "$features/editor/editorState.svelte";
 </script>
 
 <div

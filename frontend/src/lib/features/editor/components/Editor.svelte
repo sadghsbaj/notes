@@ -2,7 +2,7 @@
     import { FileText } from "@lucide/svelte";
 
     import { focusAttach } from "$core/_system/focus/focus.attach";
-    import { editorState } from "$features/editorState.svelte";
+    import { editorState } from "$features/editor/editorState.svelte";
 </script>
 
 <div class="p-1 flex-1 overflow-hidden">

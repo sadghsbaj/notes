@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Plus, X } from "@lucide/svelte";
 
-    import { editorState, type Note } from "$features/editorState.svelte";
+    import { editorState, type Note } from "$features/editor/editorState.svelte";
 </script>
 
 <div class="flex gap-3 w-full">
