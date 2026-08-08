@@ -19,7 +19,15 @@
 {#snippet Tab(tab: Note)}
     <button
         onclick={() => editorState.setActiveNote(tab.id)}
-        class="text-sm font-500 px-3 rounded-full flex gap-1 h-8 max-w-144px min-w-96px w-fit cursor-pointer shadow-sm items-center justify-between squircle-smooth hover:(shadow-md) active:scale-95 t:(bg-200-quad-out scale-200-quad-out shadow-200-quad-out text-200-quad-out) {tab ===
+        onauxclick={(e) => {
+            if (e.button !== 1) {
+                return;
+            }
+
+            e.preventDefault();
+            editorState.removeTab(tab.id);
+        }}
+        class="text-sm font-500 px-3 rounded-full flex gap-1 h-8 max-w-144px min-w-96px w-fit cursor-pointer shadow-sm transform-gpu items-center justify-between squircle-smooth hover:(shadow-md) active:scale-95 t:(bg-200-quad-out scale-200-quad-out shadow-200-quad-out text-200-quad-out) {tab ===
         editorState.activeNote
             ? 'text-white bg-zinc-800 dark:text-zinc-950 dark:bg-zinc-200'
             : 'text-main bg-elevation-1'}"
