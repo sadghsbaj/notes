@@ -1,0 +1,50 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+lerna-debug.log*
+
+# Prevent NPM / PNPM lockfiles from being tracked
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Svelte / Vite / TypeScript Cache & Test Outputs
+.vite/
+*.tsbuildinfo
+.vitest-attachments/
+test-results/
+playwright-report/
+blob-report/
+coverage/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Personal Notes / Scratchpad
+z_SCRATCH.md
+z-*.md

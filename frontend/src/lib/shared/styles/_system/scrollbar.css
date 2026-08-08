@@ -1,0 +1,45 @@
+:root {
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: light-dark(
+        color-mix(in srgb, var(--color-base-900) 20%, transparent),
+        color-mix(in srgb, var(--color-base-100) 22%, transparent)
+    );
+
+    --scrollbar-thumb-hover: light-dark(
+        color-mix(in srgb, var(--color-base-900) 35%, transparent),
+        color-mix(in srgb, var(--color-base-100) 38%, transparent)
+    );
+}
+
+/* Firefox */
+@supports (-moz-appearance: none) {
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--scrollbar-thumb) transparent;
+    }
+}
+
+/* Chrome/Safari/Edge */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+    min-height: 50px;
+    background-color: var(--scrollbar-thumb);
+    background-clip: padding-box;
+    border: 2px solid var(--scrollbar-track);
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover);
+}

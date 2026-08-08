@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Svelte App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="text-scale" content="scale" />
+
+        <meta name="application-name" content="Svelte App" />
+        <meta name="apple-mobile-web-app-title" content="Svelte App" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="mobile-web-app-capable" content="yes" />
+
+        <meta name="theme-color" content="#fafafa" id="theme-color-meta" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link
+            rel="preload"
+            href="/assets/fonts/google-sans-flex/google-sans-flex-var.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+        />
+        <style>%inline:fonts.css%</style>
+        <style>%inline:fouc.css%</style>
+
+        <script>%inline:loading.ts#markStartTime%</script>
+        <script>%inline:preferences.ts%</script>
+
+        %unocss-svelte-scoped.global%
+    </head>
+    <body data-preload>
+        <canvas id="app-loading" aria-hidden="true" aria-label="Loading"></canvas>
+
+        <script id="app-loading-script">%inline:loading.ts#initCanvas%</script>
+
+        <div id="app"></div>
+        <script type="module" src="/src/main.ts"></script>
+    </body>
+</html>

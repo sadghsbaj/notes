@@ -1,0 +1,110 @@
+/* ==========================================================================
+    PRELOAD, THEME SWITCHING & GLOBAL ANIMATIONS
+    ========================================================================== */
+
+:where(html) {
+    --t-bg: opacity 0s;
+    --t-text: opacity 0s;
+    --t-border: opacity 0s;
+    --t-opacity: opacity 0s;
+    --t-transform: opacity 0s;
+    --t-shadow: opacity 0s;
+    --t-all: opacity 0s;
+}
+
+/* Disable all transitions and animations during initial page load ([data-preload]) or theme switch ([data-theme-switching]) */
+:where(
+    :is([data-preload], [data-theme-switching]),
+    :is([data-preload], [data-theme-switching]) *:not([data-force-animate], [data-force-animate] *),
+    :is([data-preload], [data-theme-switching]) *:not([data-force-animate], [data-force-animate] *)::before,
+    :is([data-preload], [data-theme-switching]) *:not([data-force-animate], [data-force-animate] *)::after
+) {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* ==========================================================================
+    VIEW TRANSITIONS API (BLUR EFFECTS)
+    ========================================================================== */
+
+@keyframes VT-blur-out {
+    from {
+        opacity: 1;
+        filter: blur(0px);
+    }
+    to {
+        opacity: 0;
+        filter: blur(12px);
+    }
+}
+
+@keyframes VT-blur-in {
+    from {
+        opacity: 0;
+        filter: blur(12px);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0px);
+    }
+}
+
+::view-transition-old(root) {
+    animation: VT-blur-out 320ms var(--ease-quad-out) forwards;
+}
+
+::view-transition-new(root) {
+    animation: VT-blur-in 320ms var(--ease-quad-out) forwards;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    mix-blend-mode: normal;
+}
+
+/* ==========================================================================
+    ACCESSIBILITY (REDUCED MOTION)
+    ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    :where(
+        *:not([data-force-animate], [data-force-animate] *),
+        *:not([data-force-animate], [data-force-animate] *)::before,
+        *:not([data-force-animate], [data-force-animate] *)::after
+    ) {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
+}
+
+/* Programmatic reduced motion override */
+[data-reduce-motion] {
+    scroll-behavior: auto !important;
+}
+
+[data-reduce-motion]
+    :where(
+        *:not([data-force-animate], [data-force-animate] *),
+        *:not([data-force-animate], [data-force-animate] *)::before,
+        *:not([data-force-animate], [data-force-animate] *)::after
+    ),
+[data-reduce-motion]:not([data-force-animate], [data-force-animate] *) {
+    transition: none !important;
+    animation: none !important;
+}
+
+[data-reduce-motion]::view-transition-group(*),
+[data-reduce-motion]::view-transition-old(*),
+[data-reduce-motion]::view-transition-new(*) {
+    animation: none !important;
+}
