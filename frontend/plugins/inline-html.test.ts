@@ -172,4 +172,19 @@ describe("inlineHtmlPlugin", () => {
 
         expect(buildResult.length).toBeLessThan(devResult.length);
     });
+
+    test("should inline via plugin.transform hook for .html files", async () => {
+        createTempFile("styles.css", "h1 { color: blue; }");
+
+        const plugin = inlineHtmlPlugin({ dir: "plugins/__tmp_inline_test__" });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const transformHook = (plugin as any).transform;
+
+        const html = "<style>%inline:styles.css%</style>";
+        const result = await transformHook.call({}, html, "index.html");
+
+        expect(result).toBeDefined();
+        expect(result.code).toContain("h1");
+        expect(result.code).toContain("color: blue");
+    });
 });
