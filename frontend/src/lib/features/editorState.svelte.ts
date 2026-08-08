@@ -7,6 +7,7 @@ export interface Note {
 }
 
 const STORAGE_KEY = "notes-storage";
+const ACTIVE_NOTE_KEY = "notes-active-id";
 const DEBOUNCE_DELAY = 300;
 
 export class Editor {
@@ -64,25 +65,33 @@ export class Editor {
         this.#notes = this.#notes.filter((note) => note.id !== id);
 
         if (isActiveTab) {
-            // No notes left -> no active
             if (this.#notes.length === 0) {
-                this.#activeNote = undefined;
+                this.setActiveNote(undefined);
             } else {
-                // If it was the last element, the element at index - 1 moves up.
-                // Otherwise, the element at 'index' moves up (which was previously index + 1).
                 const newIndex = index >= this.#notes.length ? this.#notes.length - 1 : index;
-                this.#activeNote = this.#notes[newIndex];
+                this.setActiveNote(this.#notes[newIndex].id);
             }
         }
 
         this.saveImmediately();
     }
 
-    setActiveNote(id: Note["id"]): void {
+    setActiveNote(id: Note["id"] | undefined): void {
         if (this.#isDirty) {
             this.saveImmediately();
         }
+
+        if (!id) {
+            this.#activeNote = undefined;
+            localStorage.removeItem(ACTIVE_NOTE_KEY);
+            return;
+        }
+
         this.#activeNote = this.#notes.find((note) => note.id === id);
+
+        if (this.#activeNote) {
+            localStorage.setItem(ACTIVE_NOTE_KEY, id);
+        }
     }
 
     private triggerDebounceSave(): void {
@@ -102,6 +111,12 @@ export class Editor {
             const dataToSave = JSON.stringify(this.#notes);
             localStorage.setItem(STORAGE_KEY, dataToSave);
 
+            if (this.#activeNote) {
+                localStorage.setItem(ACTIVE_NOTE_KEY, this.#activeNote.id);
+            } else {
+                localStorage.removeItem(ACTIVE_NOTE_KEY);
+            }
+
             this.#lastSavedState = dataToSave;
         } catch (error) {
             console.warn(error);
@@ -117,8 +132,17 @@ export class Editor {
                 return;
             }
 
+            const savedActiveId = localStorage.getItem(ACTIVE_NOTE_KEY);
+
             this.#notes = JSON.parse(savedTabs);
-            this.#activeNote = this.#notes[0];
+
+            const activeExists = this.#notes.some((note) => note.id === savedActiveId);
+
+            this.#activeNote =
+                savedActiveId && activeExists
+                    ? this.#notes.find((note) => note.id === savedActiveId)
+                    : (this.#notes[0] ?? undefined);
+
             this.#lastSavedState = JSON.stringify(this.#notes);
         } catch (error) {
             console.warn(error);
