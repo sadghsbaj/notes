@@ -190,16 +190,17 @@ export function inlineHtmlPlugin(options: InlineHtmlOptions = {}): Plugin {
         },
 
         async transform(code, id) {
-            if (id.endsWith(".html") || id.includes(".html?") || id.includes("html-proxy")) {
-                const baseInlineDir = path.resolve(rootDir, inlineDirName);
-                const transformedHtml = await processInlineHtml(
-                    code,
-                    baseInlineDir,
-                    inlineDirName,
-                    isBuild
-                );
-                return { code: transformedHtml, map: null };
-            }
+            const isTarget = id.endsWith(".html") || id.includes(".html?") || id.includes("html-proxy");
+            if (!isTarget) return;
+
+            const baseInlineDir = path.resolve(rootDir, inlineDirName);
+            const transformedHtml = await processInlineHtml(
+                code,
+                baseInlineDir,
+                inlineDirName,
+                isBuild
+            );
+            return { code: transformedHtml, map: null };
         },
 
         transformIndexHtml: {
