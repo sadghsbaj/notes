@@ -7,8 +7,9 @@
     import AppView from "$core/_system/layout/app-views/AppView.svelte";
     import AppViews from "$core/_system/layout/app-views/AppViews.svelte";
     import PerformanceHost from "$core/_system/performance/PerformanceHost.svelte";
+    import EditorView from "$views/EditorView.svelte";
+    import SettingsView from "$views/SettingsView.svelte";
     import { viewState } from "$views/view.svelte";
-
 
     onMount(() => {
         return initPreload();
@@ -16,8 +17,14 @@
 </script>
 
 <div class="flex h-screen w-screen overflow-hidden">
-
     <AppViews {viewState}>
+        <AppView view="editor">
+            <EditorView />
+        </AppView>
+
+        <AppView view="settings">
+            <SettingsView />
+        </AppView>
     </AppViews>
 </div>
 
