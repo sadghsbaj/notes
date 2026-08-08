@@ -14,17 +14,29 @@
 
 <div
     class="mx-auto py-8 flex flex-col gap-5 h-full max-w-6xl w-full"
-    {@attach shortcutAttach([
-        { combo: "Alt+N", action: () => editorState.addTab() },
-        {
-            combo: "Alt+W",
-            action: () => {
-                if (editorState.activeNote?.id) {
-                    editorState.removeTab(editorState.activeNote.id);
-                }
+    {@attach shortcutAttach(
+        [
+            { combo: "Alt+N", action: () => editorState.addTab() },
+            {
+                combo: "Alt+W",
+                action: () => {
+                    if (editorState.activeNote?.id) {
+                        editorState.removeTab(editorState.activeNote.id);
+                    }
+                },
             },
-        },
-    ])}
+            ...Array.from({ length: 9 }, (_, i) => ({
+                combo: `Alt+${i + 1}`,
+                action: () => {
+                    const note = editorState.notes[i];
+                    if (note) {
+                        editorState.setActiveNote(note.id);
+                    }
+                },
+            })),
+        ],
+        { allowInInput: true }
+    )}
 >
     <Tabs />
 
