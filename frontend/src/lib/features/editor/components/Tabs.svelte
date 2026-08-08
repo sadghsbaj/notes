@@ -1,57 +1,19 @@
 <script lang="ts">
     import { Plus, X } from "@lucide/svelte";
 
-    interface Tab {
-        id: string;
-        title: string;
-    }
-
-    const tabs: Tab[] = [
-        {
-            id: "1",
-            title: "Test1",
-        },
-        {
-            id: "2",
-            title: "Test2",
-        },
-        {
-            id: "3",
-            title: "Test3",
-        },
-        {
-            id: "4",
-            title: "Test4",
-        },
-        {
-            id: "5",
-            title: "Test5",
-        },
-        {
-            id: "6",
-            title: "Test6",
-        },
-        {
-            id: "7",
-            title: "Test7",
-        },
-        {
-            id: "8",
-            title: "Test8",
-        },
-        {
-            id: "9",
-            title: "Test9",
-        },
-    ];
+    import { tabs, type Tab } from "./mock";
 </script>
 
-<div class="flex gap-2 w-full">
-    {#each tabs as tab (tab.id)}
-        {@render Tab(tab)}
-    {/each}
+<div class="flex gap-3 w-full">
+    <div class="p-1 flex gap-2 min-w-0 overflow-x-auto">
+        {#each tabs as tab (tab.id)}
+            {@render Tab(tab)}
+        {/each}
+    </div>
 
-    {@render addTabButton()}
+    <div class="p-1 shrink-0">
+        {@render addTabButton()}
+    </div>
 </div>
 
 {#snippet Tab(tab: Tab)}
@@ -63,7 +25,7 @@
         </span>
 
         <button
-            class="shrink-0 hover:(text-strong scale-110) t:(scale-200-quad-out text-200-quad-out)"
+            class="shrink-0 hover:(text-danger-500 scale-110) t:(scale-200-quad-out text-200-quad-out)"
         >
             <X size={16} strokeWidth={2.25} />
         </button>
@@ -72,7 +34,7 @@
 
 {#snippet addTabButton()}
     <button
-        class="text-main rounded-full bg-elevation-1 flex h-8 w-8 shadow-sm items-center justify-center squircle-smooth hover:(text-strong shadow-md) active:(scale-93)"
+        class="text-main rounded-full bg-elevation-1 flex h-8 w-8 shadow-sm items-center justify-center squircle-smooth hover:(text-strong shadow-md) active:(scale-90) t:(scale-200-quad-out shadow-200-quad-out text-200-quad-out)"
     >
         <Plus size={20} strokeWidth={2.25} />
     </button>
